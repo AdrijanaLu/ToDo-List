@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       body{
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+       }
+       h1{
+        font-weight: lighter;
+        font-size: 2.5em;
+        background-color: rgb(252, 251, 237);
+        text-align: center;
+        margin: 0;
+        padding: 5px;
+        color: gray;
+        width: 100%;
+       }
+       #h1-span{
+        color: rgb(253, 126, 80);
+       }
+       #h1-id{
+        width: 30px;
+       }
+       section{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        width: 85%;
+        font-size: 1.5em;
+       }
+       article{
+        width: 80%;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+       }
+       #input{
+        background-color: rgb(252, 251, 237);
+        padding: 15px 0 15px 15px;
+        border: none;
+        border-bottom-left-radius: 20px;
+        border-top-left-radius: 20px;
+        margin: 0;
+        width: 85%;
+       }
+       #addB{
+        margin: 0;
+        width: 15%;
+        color: white;
+        padding: 15px 0;
+        border: none;
+        border-bottom-right-radius: 20px;
+        border-top-right-radius: 20px;
+        background-color: rgb(125, 224, 227);
+        font-size: large;
+       }
+       #container{
+        width: 80%;
+        background-color: rgb(252, 251, 237);
+        border-radius: 20px;
+       }
+       ul{
+        list-style: none;
+        margin-left: 0;
+       }
+       .checkbox{
+        margin-left: 0;
+        width: 15px;
+       }
+       .li{
+        display: flex;
+        justify-content: space-between;
+        margin-right: 15px;
+        height: 25px;
+        margin: 10px;
+       }
+       .kanta{
+        height: 15px;
+        border: none;
+        background-image: url(https://cdn2.iconfinder.com/data/icons/ios-7-tab-bar-icons/500/trash-64.png);
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: bottom;
+       }
+       .kanta:hover{
+        height: 25px;
+        width: 25px;
+        }
+       .pClass{
+        margin-left: 10px;
+        color: grey;
+       }
+       .hr-deco{
+        width: 90%;
+        height: 0.5px;
+        border: none;
+        background-color: rgb(9, 205, 205);
+       }
+       #deleteAll{
+        width: fit-content;
+        border: none;
+        color: rgb(253, 126, 80);
+        margin: 10px;
+        border-radius: 10px;
+        padding: 5px;
+       }
+       #deleteAll:hover{
+        background-color: aqua;
+        color: white;
+       }
+       .line-trough{
+        text-decoration-line: line-through;
+       }
+       .remove{
+        display: none;
+       }
+    </style>
+</head>
+<body>
+    <h1>TO<span id="h1-span">D</span><img src="https://cdn0.iconfinder.com/data/icons/coding-and-programming-1/32/success_completed_done_finished_ended-64.png" alt="" id="h1-id"></h1>
+    <section id="section">
+        <h3>Hello User !</h3>
+        <article>
+            <input type="text" id="input" placeholder="What do you need to do?" style="font-size: 1em;">
+            <button id="addB" onclick="addInput()">ADD</button>
+        </article>
+        <div id="container">
+            <ul class="ul">
+                <li class="li">
+                    <input type="checkbox" class="checkbox" onclick="prekriziText(event)">
+                    <span class="pClass">Personal Work No. 1</span>
+                    <button class="kanta" id="delete"></button>
+                </li>
+                <hr class="hr-deco">
+                <li class="li">
+                    <input type="checkbox" class="checkbox" onclick="prekriziText(event)">
+                    <span class="pClass">Personal Work No. 2</span>
+                    <button class="kanta" id="delete1"></button>
+                </li>
+                <hr class="hr-deco">
+            </ul>
+        </div>
+        <button id="deleteAll">Clear Complet</button>
+    </section>
+
+    <script>
+        const ulVerbindung= document.querySelector("ul");
+        const inputVerbindung= document.getElementById("input");
+
+
+        function addInput(){
+            if(inputVerbindung.value){
+                //neue Elemente:
+                let neuSpan= document.createElement("span"); //novi span
+                neuSpan.textContent= inputVerbindung.value; //njegov inhalt
+                const neuCheckbox= document.createElement("input");//novi check + attribute
+                neuCheckbox.setAttribute("type", "checkbox");
+                neuCheckbox.setAttribute("onclick", "prekriziText(event)");
+                const neuKantaButton= document.createElement("button");//but za kantu
+                neuKantaButton.addEventListener("click", removeEl);
+                //neue li und Kinder hinzufügen:
+                const neuLi= document.createElement("li");//novi li
+                neuLi.appendChild(neuCheckbox);//check u li
+                neuLi.appendChild(neuSpan);  //span u li
+                neuLi.appendChild(neuKantaButton);//kanta u li
+                ulVerbindung.appendChild(neuLi);//li u ul
+                const neuHr= document.createElement("hr");
+                ulVerbindung.appendChild(neuHr);
+
+                //sad im dodat style
+                neuCheckbox.classList.add("checkbox");
+                neuSpan.classList.add("pClass");
+                neuKantaButton.classList.add("kanta");
+                neuLi.classList.add("li");
+                neuHr.classList.add("hr-deco");
+                inputVerbindung.value= "";
+            }
+
+        }
+
+        function prekriziText(event){
+            const targetEl = event.target;
+            targetEl.nextElementSibling.classList.toggle("line-trough");
+        }
+
+
+        const deleteZeile = document.getElementById("delete");
+        const deleteZeile1 = document.getElementById("delete1");
+        deleteZeile.addEventListener("click", removeEl);
+        deleteZeile1.addEventListener("click", removeEl);
+
+        function removeEl(e){
+            const removeElement = e.target.parentElement;
+            const removeNexte = removeElement.nextElementSibling;
+            ulVerbindung.removeChild(removeElement);
+            ulVerbindung.removeChild(removeNexte);
+        }
+
+
+        const deleteAllBtn = document.getElementById("deleteAll");
+        const sectionVerbindung = document.getElementById("section");
+
+        function allesLoeschen(eve){
+            const container = eve.target.previousElementSibling;
+            sectionVerbindung.removeChild(container);
+        }
+
+        deleteAllBtn.addEventListener("click", allesLoeschen);
+
+    </script>
+</body>
+</html>
